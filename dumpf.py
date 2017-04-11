@@ -1,6 +1,3 @@
-#
-#  For sherwood forest protection check: http://www.hackzapple.com/phpBB2/viewtopic.php?t=894
-#
 """Usage: python dumpf.py [options] file
 
 Options:
@@ -17,13 +14,9 @@ Examples:
 import sys
 import os
 import getopt  # https://docs.python.org/3.6/library/getopt.html
-# from pathlib import Path  # To check if a file exist
 
 # To convert bin to ascii/hexa
 import binascii
-
-# To wrap text
-# import textwrap
 
 _version = 0.17
 
@@ -57,7 +50,7 @@ def byte2ascii(data):
 
 
 def byte2int(data):
-    return int.from_bytes(data, byteorder='little', signed=False)  # byteorder='big')
+    return int.from_bytes(data, byteorder='little', signed=False)
 
 
 # Split a line at a fixed size
@@ -87,11 +80,6 @@ def dump(filename, option):
 
     # Generate the hexa line
     # and wrap every n bytes
-    # data_hex = textwrap.wrap(
-    #     byte2hex(
-    #         data_read
-    #     ).upper(), int(option) * 2
-    # )
     data_hex = linewrap(
         byte2hex(
             data_read
@@ -119,7 +107,6 @@ def dump(filename, option):
 def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hd:v", ["help", "dump=", "version"])
-    # except getopt.GetoptError as err:
     except getopt.GetoptError as err:
         # print help information and exit:
         print(err)  # will print something like "option -a not recognized"
