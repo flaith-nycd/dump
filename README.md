@@ -1,6 +1,6 @@
 # Dump a file in Python
 
-## usage
+## Usage
 ```
 Usage: python dumpf.py [options] file
 
