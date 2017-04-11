@@ -1,7 +1,8 @@
 # Dump a file in Python
 
 ## usage
-```Usage: python dumpf.py [options] file
+```
+Usage: python dumpf.py [options] file
 
 Options:
   -h, --help              show this help
@@ -12,6 +13,7 @@ Options:
 Examples:
   python dumpf.py exe_file.exe
   python dumpf.py -d16 exe_file.exe
-  python dumpf.py --dump=16 exe_file.exe```
+  python dumpf.py --dump=16 exe_file.exe
+```
 
 ![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screenshot.png)
