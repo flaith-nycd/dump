@@ -27,8 +27,7 @@ Examples:
 """
 import sys
 import os
-import getopt  # https://docs.python.org/3.6/library/getopt.html
-import codecs
+import getopt
 
 # To convert bin to ascii/hexa
 import binascii
@@ -182,11 +181,9 @@ def dump(filename, **kwargs):
         f.close()
 
 
-"""
-That's the main program
-"""
-
-
+#############################
+# That's the main program
+#############################
 def main(argv):
     _org = 0
     # default value of bytes per line
@@ -205,6 +202,7 @@ def main(argv):
         usage()
         sys.exit(2)
 
+    # Chaeck each argument
     for opt, arg in opts:
         if opt == "-v":
             print("Dumpf version {}".format(__VERSION))
