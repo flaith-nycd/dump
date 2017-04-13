@@ -1,6 +1,7 @@
-# Dump a file in Python
+# Dump a file in Python3
 
-## Usage
+## Version 0.22
+
 ```
 Usage: python dumpf.py [options] file
 
