@@ -1,24 +1,38 @@
+# -*- coding: utf-8 -*-
 """Usage: python dumpf.py [options] file
 
 Options:
   -h, --help              show this help
-  -d n, --dump=n          dump file in hexa every 'n' bytes
+  -v, --version           show version
+
+  -d, --dump=             dump file in hexa every 'n' bytes
                           (default value set to 16)
-  -v, --version.          show version
+  -o, --org=              set origin address (default: 0)
+  -s, --show=             Show all info (0:all, 1:hex, 2:text) - default: 0
+  -x, --export=file       Export the result to a file
+
 
 Examples:
-  python dumpf.py exe_file.exe
-  python dumpf.py -d16 exe_file.exe
-  python dumpf.py --dump=16 exe_file.exe
+  python dumpf.py <file>
+  python dumpf.py -d16 <file>
+  python dumpf.py --dump=16 <file>
+  python dumpf.py --o8192 <file>
+  python dumpf.py --org=$2000 <file>
+  python dumpf.py --org=$2000 -export=file.txt <file>
 """
 import sys
 import os
 import getopt  # https://docs.python.org/3.6/library/getopt.html
+import codecs
 
 # To convert bin to ascii/hexa
 import binascii
 
-_version = 0.17
+__author__ = 'Nicolas Djurovic'
+
+__VERSION = 0.22
+__SEP = "  "
+__ALL = 1
 
 
 def usage():
@@ -42,7 +56,10 @@ def byte2hex(data):
 def byte2ascii(data):
     result = ""
     for x in data:
-        if x < 32:  # or x > 127:
+        # Need to check if it's > 127 because of
+        # UnicodeEncodeError: 'charmap' codec can't encode character '\x92' in position 52:
+        # character maps to <undefined>
+        if x < 32 or x > 127:
             result += '.'
         else:
             result += chr(x)
@@ -65,7 +82,9 @@ def insertseparator(string, sep=" "):
     return sep.join(odd + even for odd, even in zip(string[::2], string[1::2])).rstrip()
 
 
-def dump(filename, option):
+def dump(filename, **kwargs):
+    _export = False
+
     if not filename:
         usage()
         sys.exit()
@@ -78,61 +97,102 @@ def dump(filename, option):
         data_read = file_to_dump.read()
         file_to_dump.close()
 
+    for key, value in kwargs.items():
+        if key == 'nb_byte':
+            if value:
+                _bytes = value
+        if key == 'org':
+            if value:
+                _org = value
+        if key == 'export':
+            if value:
+                _export_file = value
+                _export = True
+
     # Generate the hexa line
     # and wrap every n bytes
     data_hex = linewrap(
         byte2hex(
             data_read
-        ).upper(), int(option) * 2
+        ).upper(), int(_bytes) * 2
     )
 
     # Generate one line of text
     data_txt = linewrap(
         byte2ascii(
             data_read
-        ), int(option)
+        ), int(_bytes)
     )
 
     # Start an index to display the text line
     index = 0
 
-    # Print our result
-    for each_line in data_hex:
-        # left aligned with a width calculated (option is the number of bytes)
-        # and multiply by 3 because of the space between each byte and minus 1 for the last space
-        print("{:<{width}}|{}".format(insertseparator(each_line), data_txt[index], width=(int(option) * 3) - 1))
-        index += 1
+    if _export is True:
+        print('Saving file "{}"'.format(_export_file))
+        with open(_export_file, 'w') as f:
+            for each_line in data_hex:
+                # left aligned with a width calculated (option is the number of bytes)
+                # and multiply by 3 because of the space between each byte and minus 1 for the last space
+                chaine = "{:<{width}}{sep}{data}".format(insertseparator(each_line),
+                                                         data=data_txt[index],
+                                                         width=(int(_bytes) * 3) - 1,
+                                                         sep=__SEP)
+                f.write(chaine + '\n')
+                index += 1
+            f.close()
+    else:
+        # Print our result
+        for each_line in data_hex:
+            chaine = "{:<{width}}{sep}{}".format(insertseparator(each_line), data_txt[index],
+                                                 width=(int(_bytes) * 3) - 1, sep=__SEP)
+            # print(codecs.encode(chaine, 'utf-8'))
+            print(chaine)
+            index += 1
 
 
 def main(argv):
+    # ORGinal address
+    _org = 0
+    # default value of bytes per line
+    _bytes = 8 * 2
+    # What to show
+    _show = __ALL
+    # Default filename to export
+    _export_file = ''
+
     try:
-        opts, args = getopt.getopt(argv, "hd:v", ["help", "dump=", "version"])
+        opts, args = getopt.getopt(argv, "hd:o:s:vx:", ["help", "dump=", "org=", "show=", "version", "export="])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(err)  # will print something like "option -a not recognized"
         usage()
         sys.exit(2)
 
-    dump_option = 16  # default value of bytes per line
-
     for opt, arg in opts:
         if opt == "-v":
-            print("Dumpf version {}".format(_version))
+            print("Dumpf version {}".format(__VERSION))
             sys.exit()
         elif opt in ("-h", "--help"):
             usage()
             sys.exit()
+        elif opt in ("-o", "--org"):
+            _org = arg
+        elif opt in ("-s", "--show"):
+            _show = arg
+        elif opt in ("-x", "--export"):
+            _export_file = arg
         elif opt in ("-v", "--version"):
-            print("Dumpf version {}".format(_version))
+            print("Dumpf version {}".format(__VERSION))
             sys.exit()
         elif opt in ("-d", "--dump"):
-            dump_option = arg
+            _bytes = arg
         else:
             assert False, "unhandled option"
 
     # Get real string, not a list (args = filename)
-    dump("".join(args), dump_option)
+    dump("".join(args), nb_byte=_bytes, org=_org, show=_show, export=_export_file)
 
 
+# If __name__ = "__main__", the file called is the current executed file
 if __name__ == "__main__":
     main(sys.argv[1:])
