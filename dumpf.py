@@ -22,7 +22,7 @@ Examples:
   python dumpf.py --o8192 <file>
   python dumpf.py --org=8129 <file>
 
-  Special for Sherwood Forest ;)
+  --Special for Sherwood Forest ;)
   python dumpf.py --org=40677 --export=PIC.INDEX#050000.DMP PIC.INDEX#050000
 """
 import sys
