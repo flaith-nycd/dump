@@ -144,8 +144,10 @@ def dump(filename, **kwargs):
     else:
         # Print our result
         for each_line in data_hex:
-            chaine = "{:<{width}}{sep}{}".format(insertseparator(each_line), data_txt[index],
-                                                 width=(int(_bytes) * 3) - 1, sep=__SEP)
+            chaine = "{:<{width}}{sep}{data}".format(insertseparator(each_line),
+                                                     data=data_txt[index],
+                                                     width=(int(_bytes) * 3) - 1,
+                                                     sep=__SEP)
             # print(codecs.encode(chaine, 'utf-8'))
             print(chaine)
             index += 1
