@@ -24,10 +24,10 @@ Examples:
   python dumpf.py --org=8129 <file>
 
   --Special for Sherwood Forest ;)
-  python dumpf.py --org=40677 --export=PIC.INDEX#050000.DMP PIC.INDEX#050000
+  python dumpf.py --org=40677 --export=PIC.INDEX#059EE5.DMP PIC.INDEX#050000
 ```
 
-![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screenshot.png)
+![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screen_shot.png)
 
 ## TODO
 
