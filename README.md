@@ -26,3 +26,10 @@ Examples:
 ```
 
 ![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screenshot.png)
+
+## TODO
+
+- [ ] use the org option
+- [ ] use the show option
+- [x] export file
+- [x] dump with choice of total of bytes
