@@ -21,8 +21,10 @@ Examples:
   python dumpf.py -d16 <file>
   python dumpf.py --dump=16 <file>
   python dumpf.py --o8192 <file>
-  python dumpf.py --org=$2000 <file>
-  python dumpf.py --org=$2000 -export=file.txt <file>
+  python dumpf.py --org=8129 <file>
+
+  --Special for Sherwood Forest ;)
+  python dumpf.py --org=40677 --export=PIC.INDEX#050000.DMP PIC.INDEX#050000
 ```
 
 ![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screenshot.png)
