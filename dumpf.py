@@ -56,13 +56,14 @@ def byte2hex(data):
 def byte2ascii(data):
     result = ""
     for x in data:
-        # Need to check if it's > 127 because of
-        # UnicodeEncodeError: 'charmap' codec can't encode character '\x92' in position 52:
-        # character maps to <undefined>
-        if x < 32 or x > 127:
-            result += '.'
-        else:
+        if x in range(32, 128):  # Check from ascii code $20 to $7E
             result += chr(x)
+        elif x in range(160, 255):  # if between $A0 to $FE
+            # x -= 128
+            result += chr(x - 128)  # Substract $80 to go back between $20 to $7E
+        else:
+            result += '.'
+
     return result
 
 
