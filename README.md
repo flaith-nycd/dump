@@ -24,4 +24,4 @@ Examples:
   python dumpf.py --org=$2000 -export=file.txt <file>
 ```
 
-![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screen_shot.png)
+![Screenshot](https://github.com/flaith-nycd/dump/blob/master/screenshot.png)
