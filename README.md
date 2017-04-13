@@ -29,7 +29,7 @@ Examples:
 
 ## TODO
 
-- [ ] use the org option
+- [x] use the org option
 - [ ] use the show option
 - [x] export file
 - [x] dump with choice of total of bytes
