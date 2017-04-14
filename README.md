@@ -34,6 +34,6 @@ Examples:
 - [x] use the org option
 - [ ] use the show option
 - [x] export (save) file
-- [ ] save it at a binary, text file for other languages (ex: .h)
+- [ ] save it as a binary, or special text files for other languages (ex: .h)
 - [x] dump with choice of total of bytes
 - [ ] extract part of a file, from address to address (using [from:to] ?)
