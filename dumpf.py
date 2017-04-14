@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-#  For sherwood forest protection check: http://www.hackzapple.com/phpBB2/viewtopic.php?t=894
-#
 """Usage: python dumpf.py [options] file
 
 Options:
