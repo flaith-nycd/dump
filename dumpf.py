@@ -199,9 +199,9 @@ def main(argv):
         usage()
         sys.exit(2)
 
-    # Chaeck each argument
+    # Check each argument
     for opt, arg in opts:
-        if opt == "-v":
+        if opt in ("-v", "--version"):
             print("Dumpf version {}".format(__VERSION))
             sys.exit()
         elif opt in ("-h", "--help"):
@@ -213,9 +213,6 @@ def main(argv):
             _show = arg
         elif opt in ("-x", "--export"):
             _export_file = arg
-        elif opt in ("-v", "--version"):
-            print("Dumpf version {}".format(__VERSION))
-            sys.exit()
         elif opt in ("-d", "--dump"):
             _bytes = arg
         else:
