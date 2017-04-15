@@ -26,7 +26,7 @@ import sys
 import os
 import getopt
 
-# To convert bin to ascii/hexa
+# To convert byte to ascii/hexa
 import binascii
 
 __author__ = 'nico_djurovic'
@@ -73,12 +73,6 @@ def byte2ascii(data):
             result += '.'
 
     return result
-
-
-#############################
-# Convert bytes to integer
-def byte2int(data):
-    return int.from_bytes(data, byteorder='little', signed=False)
 
 
 #############################
