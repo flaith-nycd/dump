@@ -106,7 +106,7 @@ def dump(filename, **kwargs):
 
     """
     'with' creates a context manager which checks
-    the file is open and closed
+    the file is opened and closed
     """
     with open(filename, 'rb') as file_to_dump:
         data_read = file_to_dump.read()
