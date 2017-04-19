@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Usage: python dumpf.py [options] file
 
@@ -20,7 +21,7 @@ Examples:
   python dumpf.py --org=8129 <file>
 
   --Special for Sherwood Forest ;)
-  python dumpf.py --org=40677 --export=PIC.INDEX#050000.DMP PIC.INDEX#050000
+  python dumpf.py --org=40677 --export=PIC.INDEX#059EE5.DMP PIC.INDEX#050000
 """
 import sys
 import os
@@ -29,9 +30,9 @@ import getopt
 # To convert byte to ascii/hexa
 import binascii
 
-__author__ = 'nico_djurovic'
+__author__ = 'Nicolas Djurovic'
+__version__ = 0.22
 
-__VERSION = 0.22
 __SEP = "  "
 __ALL = 1
 
@@ -103,10 +104,17 @@ def dump(filename, **kwargs):
         print('Cannot access \'{}\': No such file or directory !!!'.format(filename))
         sys.exit(3)
 
+    """
+    'with' creates a context manager which checks
+    the file is open and closed
+    """
     with open(filename, 'rb') as file_to_dump:
         data_read = file_to_dump.read()
-        file_to_dump.close()
+        # No need at that point to close it manually
+        # this context manager will handle it
+        # file_to_dump.close()
 
+    # Get the arguments in the dictionnary
     for key, value in kwargs.items():
         if key == 'nb_byte':
             if value:
@@ -157,7 +165,7 @@ def dump(filename, **kwargs):
         # Left aligned with a width calculated and multiplied by 3 because of
         # the space between each byte and minus 1 for the last space
         chaine += '{0:<{width}}'.format(insertseparator(each_line), width=(int(_bytes) * 3) - 1)
-        # Then add the seperate string and the text
+        # Then add the seperated string and the text
         chaine += '{sep}{data}'.format(data=data_txt[index], sep=__SEP)
 
         # If we export, wrote inside the file
@@ -186,7 +194,7 @@ def main(argv):
 
     # Get arguments
     try:
-        opts, args = getopt.getopt(argv, "hd:o:s:vx:", ["help", "dump=", "org=", "show=", "version", "export="])
+        opts, args = getopt.getopt(argv, "hvd:o:s:x:", ["help", "version", "dump=", "org=", "show=", "export="])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(err)  # will print something like "option -a not recognized"
