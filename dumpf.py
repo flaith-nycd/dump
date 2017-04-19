@@ -204,7 +204,7 @@ def main(argv):
     # Check each argument
     for opt, arg in opts:
         if opt in ("-v", "--version"):
-            print("Dumpf version {}".format(__VERSION))
+            print("Dumpf version {}".format(__version__))
             sys.exit()
         elif opt in ("-h", "--help"):
             usage()
